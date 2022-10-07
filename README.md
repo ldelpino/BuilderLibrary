@@ -44,5 +44,10 @@
  [X] - Documentar clase, metodos y atributos.  
  [X] - Identificar nuevos usos de la librerias, asi como la forma de utilizarla y reutilizarla.  
  [X] - Realizar mejoras si es necesario.  
- [X] - Realizar documentacion y casos de pruebas unitarios.  
- [X] - Subir repositorio a GitHub y Maven.  
+ [ ] - Realizar documentacion y casos de pruebas unitarios.  
+ [ ] - Subir repositorio a GitHub y Maven.  
+ 
+ ## Realizacion de pruebas unitarias y documentacion oficial.
+ 
+ Realizar las pruebas unitarias de la libreria.
+ Realizar la documentacion oficial, diagrama de clases, utilizacion y reutilizacion de la libreria.

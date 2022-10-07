@@ -17,14 +17,11 @@
 package io.github.ldelpino.libs.builderlibrary;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Clase abstracta que permite la creacion del patron de diseño <b>Builder</b>
+ * Interfaz que permite la creacion del patron de diseño <b>Builder</b>
  * de la programacion orientada a objetos.
  * <p>
  * Cuando es necesario la creacion de instancias de entidades en un modelo de
@@ -66,25 +63,7 @@ import java.util.Map;
  * @since jdk-18.0.2
  * @param <T> el tipo de dato de la instancia a crear.
  */
-public abstract class BuilderPattern<T> implements BuilderInterface<T> {
-
-    /**
-     * Establece el conjunto de propiedades de este objeto con el cual crear
-     * nuevas instancias.
-     */
-    protected Map<String, BuilderProperty<String, Object>> properties;
-
-    /**
-     * El validador del constructor de instancias.
-     */
-    protected BuilderValidator validator;
-
-    /**
-     * Construye una nueva instancia de esta clase.
-     */
-    public BuilderPattern() {
-        this.properties = new HashMap<>();
-    }
+public interface BuilderInterface<T> {
 
     /**
      * Devuelve un mapa inmodificable con el conjunto de propiedades que posee
@@ -92,10 +71,7 @@ public abstract class BuilderPattern<T> implements BuilderInterface<T> {
      *
      * @return el mapa con las propiedades del objeto.
      */
-    @Override
-    public Map<String, BuilderProperty<String, Object>> getProperties() {
-        return Collections.unmodifiableMap(properties);
-    }
+    public Map<String, BuilderProperty<String, Object>> getProperties();
 
     /**
      * Devuelve un nuevo mapa a partir del mapa de propiedades con la llave y el
@@ -104,14 +80,7 @@ public abstract class BuilderPattern<T> implements BuilderInterface<T> {
      * @return el nuevo mapa con la llave y el valor de las propiedades de este
      * objeto.
      */
-    @Override
-    public Map<String, Object> getMapProperties() {
-        Map<String, Object> props = new HashMap<>();
-        for (String s : getProperties().keySet()) {
-            props.put(s, getProperties().get(s).getValue());
-        }
-        return props;
-    }
+    public Map<String, Object> getMapProperties();
 
     /**
      * Devuelve una coleccion de las llaves o identificadores de las propiedades
@@ -119,24 +88,14 @@ public abstract class BuilderPattern<T> implements BuilderInterface<T> {
      *
      * @return la coleccion de llaves de ste objeto.
      */
-    @Override
-    public Collection<String> getPropertyKeys() {
-        return getProperties().keySet();
-    }
+    public Collection<String> getPropertyKeys();
 
     /**
      * Devuelve una coleccion con los valores de las propiedades de este objeto.
      *
      * @return la coleccion con los valores de las propiedades de este objeto.
      */
-    @Override
-    public Collection<Object> getPropertyValues() {
-        Collection<Object> values = new ArrayList<>(getProperties().size());
-        for (String s : getProperties().keySet()) {
-            values.add(getProperties().get(s).getValue());
-        }
-        return values;
-    }
+    public Collection<Object> getPropertyValues();
 
     /**
      * Establece si existe o no una propiedad dado la llave.
@@ -146,10 +105,7 @@ public abstract class BuilderPattern<T> implements BuilderInterface<T> {
      * @return <code>true</code> si existe una propiedad contenida con la llave
      * especificada, de lo contrario devuelve <code>false</code>.
      */
-    @Override
-    public boolean existProperty(String propertyName) {
-        return getProperties().containsKey(propertyName);
-    }
+    public boolean existProperty(String propertyName);
 
     /**
      * Devuelve una propiedad a partir de la llave o identificador de esta.
@@ -158,10 +114,7 @@ public abstract class BuilderPattern<T> implements BuilderInterface<T> {
      * @return una de las propiedades de este objeto que coincide con el
      * identificador, si existe.
      */
-    @Override
-    public BuilderProperty<String, Object> getProperty(String propertyName) {
-        return getProperties().get(propertyName);
-    }
+    public BuilderProperty<String, Object> getProperty(String propertyName);
 
     /**
      * Establece una nueva propiedad para este objeto.
@@ -170,18 +123,7 @@ public abstract class BuilderPattern<T> implements BuilderInterface<T> {
      * @throws IOException si la propiedad es nula, la llave ya existe o esta
      * duplicada o la propiedad no es valida.
      */
-    @Override
-    public void putProperty(BuilderProperty<String, Object> property) throws IOException {
-        if (property == null) {
-            throw new IOException("Error.", new Throwable("The property cannot be null."));
-        }
-        if (getProperties().containsKey(property.getKey())) {
-            throw new IOException("Error, duplicated property key",
-                    new Throwable("The property key already exist"));
-        }
-        property.validate();
-        properties.put(property.getKey(), property);
-    }
+    public void putProperty(BuilderProperty<String, Object> property) throws IOException;
 
     /**
      * Establece una nueva propiedad a partir de la llave que identifica a la
@@ -191,10 +133,7 @@ public abstract class BuilderPattern<T> implements BuilderInterface<T> {
      * @param value el valor de la propiedad.
      * @throws IOException si la llave ya existe o esta duplicada.
      */
-    @Override
-    public void putProperty(String propertyName, Object value) throws IOException {
-        putProperty(new BuilderProperty(propertyName, value));
-    }
+    public void putProperty(String propertyName, Object value) throws IOException;
 
     /**
      * Devuelve el validador del patron con el cual validar la creacion de
@@ -202,20 +141,14 @@ public abstract class BuilderPattern<T> implements BuilderInterface<T> {
      *
      * @return el validador de la creacion de nuevas instancias.
      */
-    @Override
-    public BuilderValidator getBuilderValidator() {
-        return validator;
-    }
+    public BuilderValidator getBuilderValidator();
 
     /**
      * Establece un nuevo validador para la creacion de instancias.
      *
      * @param validator el nuevo validador de instancias.
      */
-    @Override
-    public void setBuilderValidator(BuilderValidator validator) {
-        this.validator = validator;
-    }
+    public void setBuilderValidator(BuilderValidator validator);
 
     /**
      * Valida y construye una nueva instancia del objeto a crear.
@@ -225,19 +158,5 @@ public abstract class BuilderPattern<T> implements BuilderInterface<T> {
      * @throws InstanceBuildException si ocurre un error durante el proceso de
      * validacion antes de crear la nueva instancia.
      */
-    @Override
-    public final T build() throws InstanceBuildException {
-        if (validator != null) {
-            validator.validate();
-        }
-        return buildInstance();
-    }
-
-    /**
-     * Devuelve la nueva instancia del objeto a necesitar instanciar a partir
-     * del patron <b>Builder</b> y las propiedades almacenadas con anterioridad.
-     *
-     * @return la nueva instancia.
-     */
-    protected abstract T buildInstance();
+    public T build() throws InstanceBuildException;
 }

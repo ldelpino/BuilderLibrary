@@ -16,8 +16,8 @@
  */
 package io.github.ldelpino.libs.builderlibrary;
 
+import io.github.ldelpino.libs.builderlibrary.property.BuilderProperty;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -25,7 +25,7 @@ import java.util.Map;
 
 /**
  * Clase abstracta que permite la creacion del patron de diseño <b>Builder</b>
- * de la programacion orientada a objetos.
+ * en la programacion orientada a objetos.
  * <p>
  * Cuando es necesario la creacion de instancias de entidades en un modelo de
  * negocios utilizando la programacion orientada a objetos, se hace uso
@@ -84,6 +84,7 @@ public abstract class BuilderPattern<T> implements BuilderInterface<T> {
      */
     public BuilderPattern() {
         this.properties = new HashMap<>();
+        validator = null;
     }
 
     /**
@@ -106,7 +107,7 @@ public abstract class BuilderPattern<T> implements BuilderInterface<T> {
      */
     @Override
     public Map<String, Object> getMapProperties() {
-        Map<String, Object> props = new HashMap<>();
+        Map<String, Object> props = new HashMap<>(getProperties().size());
         for (String s : getProperties().keySet()) {
             props.put(s, getProperties().get(s).getValue());
         }
@@ -131,11 +132,7 @@ public abstract class BuilderPattern<T> implements BuilderInterface<T> {
      */
     @Override
     public Collection<Object> getPropertyValues() {
-        Collection<Object> values = new ArrayList<>(getProperties().size());
-        for (String s : getProperties().keySet()) {
-            values.add(getProperties().get(s).getValue());
-        }
-        return values;
+        return getMapProperties().values();
     }
 
     /**
@@ -167,7 +164,7 @@ public abstract class BuilderPattern<T> implements BuilderInterface<T> {
      * Establece una nueva propiedad para este objeto.
      *
      * @param property la nueva propiedad a establecer al objeto.
-     * @throws IOException si la propiedad es nula, la llave ya existe o esta
+     * @throws IOException si la propiedad es nula, la llave ya existe, esta
      * duplicada o la propiedad no es valida.
      */
     @Override
@@ -227,10 +224,11 @@ public abstract class BuilderPattern<T> implements BuilderInterface<T> {
      */
     @Override
     public final T build() throws InstanceBuildException {
+        T instance = buildInstance();
         if (validator != null) {
-            validator.validate();
+            validator.validate(instance);
         }
-        return buildInstance();
+        return instance;
     }
 
     /**

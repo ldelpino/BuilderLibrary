@@ -17,19 +17,20 @@
 package io.github.ldelpino.libs.builderlibrary;
 
 /**
- * Interface que garantiza la correcta validacion de los datos antes de la
- * creacion de nuevas instancias por parte de la clase {@code BuilderPattern}.
+ * Servicio de interface que garantiza la correcta validacion de los datos antes
+ * de la creacion de nuevas instancias por parte de la clase
+ * {@code BuilderInterface}.
  * <p>
  * {@code BuilderValidator} es utilizada cuando es necesario realizar
  * validaciones antes de la creacion de nuevas instancias de objetos, la
- * interfaz ha sido dise;ada para ser reutilizable y escalable a variadas formas
+ * interfaz ha sido diseñada para ser reutilizable y escalable a variadas formas
  * de validacion.
  * </p>
  * <p>
  * La forma recomendada para su <b>reutilizacion</b> es la creacion de nuevas
  * clases que implementen la interfaz, las cuales estaran en la obligacion de
  * reimplementar el metodo
- * {@link io.github.ldelpino.libs.builderlibrary.BuilderValidator#validate()},
+ * {@link io.github.ldelpino.libs.builderlibrary.BuilderValidator#validate(java.lang.Object)},
  * donde en la implementacion del mismo se realizara el proceso de validacion y
  * si no es valido entonces lanzar una nueva instancia de la excepcion
  * {@link io.github.ldelpino.libs.builderlibrary.InstanceBuildException}.
@@ -37,25 +38,27 @@ package io.github.ldelpino.libs.builderlibrary;
  * <p>
  * La forma recomendada para su utilizacion es agregar una nueva instancia de la
  * clase que implementa la interfaz {@code BuilderValidator} en el metodo
- * {@link io.github.ldelpino.libs.builderlibrary.BuilderPattern#setBuilderValidator(io.github.ldelpino.libs.builderlibrary.BuilderValidator)},
+ * {@link io.github.ldelpino.libs.builderlibrary.BuilderInterface#setBuilderValidator(io.github.ldelpino.libs.builderlibrary.BuilderValidator)},
  * antes del proceso de creacion de nuevas instancias.
  * </p>
  *
  * @author ldelpino
- * @see io.github.ldelpino.libs.builderlibrary.BuilderPattern#build()
+ * @param <T> el tipo de dato de la instancia a validar.
+ * @see io.github.ldelpino.libs.builderlibrary.BuilderInterface#build()
  * @see
- * io.github.ldelpino.libs.builderlibrary.BuilderPattern#getBuilderValidator()
+ * io.github.ldelpino.libs.builderlibrary.BuilderInterface#getBuilderValidator()
  * @version 1.0-SNAPSHOT
  * @since jdk-18.0.2
  */
-public interface BuilderValidator {
+public interface BuilderValidator<T> {
 
     /**
      * Realiza el proceso de validacion de los datos antes de crear nuevas
      * instancias por parte del objeto {@code BuilderPattern} correspondiente.
      *
+     * @param value el nuevo valor de la instancia.
      * @throws InstanceBuildException si ocurre un error en la validacion de los
      * datos y por tanto la nueva instancia no debe ser creada.
      */
-    public void validate() throws InstanceBuildException;
+    public void validate(T value) throws InstanceBuildException;
 }

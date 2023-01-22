@@ -16,19 +16,20 @@
  */
 package io.github.ldelpino.libs.builderlibrary;
 
+import io.github.ldelpino.libs.builderlibrary.property.BuilderProperty;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Map;
 
 /**
- * Interfaz que permite la creacion del patron de diseño <b>Builder</b>
- * de la programacion orientada a objetos.
+ * Interfaz de comunicación que permite la creación del patrón de diseño
+ * <b>Builder</b> en la programación orientada a objetos.
  * <p>
- * Cuando es necesario la creacion de instancias de entidades en un modelo de
+ * Cuando es necesario la creación de instancias de entidades en un modelo de
  * negocios utilizando la programacion orientada a objetos, se hace uso
  * directamente del constructor de la clase a la cual estamos instanciando,
  * generando un alto acoplamiento y dependencias sobre ese tipo de datos en
- * especifico, en este punto es cuando el uso de patrones y principios de diseño
+ * específico, en este punto es cuando el uso de patrones y principios de diseño
  * se vuelven necesario en el mundo de la programacion.
  * </p>
  * <p>
@@ -36,9 +37,10 @@ import java.util.Map;
  * diseño <b>Open/Close</b> el cual establece que el diseño de un modelo de
  * negocios debe ser abierto a extensión y cerrado a modificación, o sea para
  * garantizar la reutilización y escalado de nuestro código para futuros cambios
- * y versiones nuestro código debe garantizar poder ser extendido y mejorado sin
- * necesidad de modificar el código fuente ya escrito con anterioridad, una de
- * las maneras de garantizar este principio es con el patrón de diseño Builder.
+ * y versiones nuestro código debe garantizar poder ser extendido y mejorado,
+ * sin necesidad de modificar el código fuente ya escrito con anterioridad, una
+ * de las maneras de garantizar este principio es con el patrón de diseño
+ * Builder.
  * </p>
  * <p>
  * El patrón de diseño <b>Builder</b> se utiliza cuando necesitamos crear nuevas
@@ -50,12 +52,12 @@ import java.util.Map;
  * instancias.
  * </p>
  * <p>
- * La <b>reutilización</b> de la clase {@code BuilderPattern} permitirá
+ * La <b>reutilización</b> a traves de la clase {@code BuilderPattern} permitirá
  * disminuir el tiempo de programación de este patrón para los programadores y
  * mantener un diseño ergonómico y eficiente, creando una clase que hereda de
  * esta clase abstracta y reimplementando el método
  * {@link io.github.ldelpino.libs.builderlibrary.BuilderPattern#buildInstance()},
- * donde en él se establece la creación de la nueva instancia necesaria.
+ * donde en él se establece la creación de la nueva instancias necesarias.
  * </p>
  *
  * @author ldelpino
@@ -66,8 +68,19 @@ import java.util.Map;
 public interface BuilderInterface<T> {
 
     /**
+     * Devuelve el nombre identificativo del constructor de instancias.
+     *
+     * @return la llave con la cual identificar al constructor de instancias.
+     */
+    public String getBuilderName();
+
+    /**
      * Devuelve un mapa inmodificable con el conjunto de propiedades que posee
      * este objeto.
+     * <p>
+     * El mapa establece un conjunto de propiedades almacenadas en objetos de
+     * tipo {@link BuilderProperty}, la llave para la obtencion de la propiedad
+     * es el nombre identificativo con el que se almacena.</p>
      *
      * @return el mapa con las propiedades del objeto.
      */

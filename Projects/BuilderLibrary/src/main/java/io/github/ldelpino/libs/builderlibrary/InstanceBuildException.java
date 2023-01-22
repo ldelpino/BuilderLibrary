@@ -18,7 +18,7 @@ package io.github.ldelpino.libs.builderlibrary;
 
 /**
  * Clase que señala que ha ocurrido un error en la validación de un objeto
- * {@link io.github.ldelpino.libs.builderlibrary.BuilderProperty}.
+ * {@link io.github.ldelpino.libs.builderlibrary.property.BuilderProperty}.
  * <p>
  * La clase es utilizada cuando ocurre un error en la validación de los datos de
  * una propiedad para la construcción de un objeto

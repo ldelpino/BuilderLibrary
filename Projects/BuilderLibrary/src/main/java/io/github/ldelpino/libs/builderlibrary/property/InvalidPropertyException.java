@@ -14,17 +14,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package io.github.ldelpino.libs.builderlibrary;
+package io.github.ldelpino.libs.builderlibrary.property;
 
 import java.io.IOException;
 
 /**
  * Clase que señala que ha ocurrido un error en la validación de un objeto
- * {@link io.github.ldelpino.libs.builderlibrary.BuilderProperty}.
+ * {@link io.github.ldelpino.libs.builderlibrary.property.BuilderProperty}.
  * <p>
  * La clase es utilizada cuando ocurre un error en la validación de los datos de
  * una propiedad para la construcción de un objeto
- * {@link io.github.ldelpino.libs.builderlibrary.BuilderPattern}, clase
+ * {@link io.github.ldelpino.libs.builderlibrary.BuilderInterface}, clase
  * utilizada para la creación de instancias a partir del patrón de diseño
  * conocido como <b>Builder</b>.
  * </p>
@@ -36,8 +36,8 @@ import java.io.IOException;
  * </p>
  *
  * @author ldelpino
- * @see io.github.ldelpino.libs.builderlibrary.PropertyValidator
- * @see io.github.ldelpino.libs.builderlibrary.BuilderProperty#validate()
+ * @see io.github.ldelpino.libs.builderlibrary.property.PropertyValidator
+ * @see io.github.ldelpino.libs.builderlibrary.property.BuilderProperty#validate()
  * @version 1.0-SNAPSHOT
  * @since jdk-18.0.2
  *

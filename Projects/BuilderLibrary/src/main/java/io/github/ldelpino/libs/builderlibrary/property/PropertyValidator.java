@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package io.github.ldelpino.libs.builderlibrary;
+package io.github.ldelpino.libs.builderlibrary.property;
 
 /**
  * Interface que garantiza la correcta validacion de los datos de una propiedad
@@ -33,33 +33,35 @@ package io.github.ldelpino.libs.builderlibrary;
  * La forma recomendada para su <b>reutilizacion</b> es la creacion de nuevas
  * clases que implementen la interfaz, las cuales estaran en la obligacion de
  * reimplementar el metodo
- * {@link io.github.ldelpino.libs.builderlibrary.PropertyValidator#validate() },
+ * {@link io.github.ldelpino.libs.builderlibrary.property.PropertyValidator#validate(java.lang.Object)},
  * donde en la implementacion del mismo se realizara el proceso de validacion y
  * si no es valido entonces lanzar una nueva instancia de la excepcion
- * {@link io.github.ldelpino.libs.builderlibrary.InvalidPropertyException}.
+ * {@link io.github.ldelpino.libs.builderlibrary.property.InvalidPropertyException}.
  * </p>
  * <p>
  * La forma recomendada para su utilizacion es agregar una nueva instancia de la
  * clase que implementa la interfaz {@code PropertyValidator} en el metodo
- * {@link io.github.ldelpino.libs.builderlibrary.BuilderProperty#setPropertyValidator(io.github.ldelpino.libs.builderlibrary.PropertyValidator)},
+ * {@link io.github.ldelpino.libs.builderlibrary.property.BuilderProperty#setPropertyValidator(io.github.ldelpino.libs.builderlibrary.property.PropertyValidator)},
  * antes del proceso de insercion de la propiedad en el objeto
  * {@code BuilderPattern} correspondiente.
  * </p>
  *
  * @author ldelpino
- * @see io.github.ldelpino.libs.builderlibrary.BuilderProperty
+ * @param <T> el tipo de dato del valor de la propiedad.
+ * @see io.github.ldelpino.libs.builderlibrary.property.BuilderProperty
  * @see
- * io.github.ldelpino.libs.builderlibrary.BuilderProperty#setPropertyValidator(io.github.ldelpino.libs.builderlibrary.PropertyValidator)
+ * io.github.ldelpino.libs.builderlibrary.property.BuilderProperty#setPropertyValidator(io.github.ldelpino.libs.builderlibrary.property.PropertyValidator)
  * @version 1.0-SNAPSHOT
  * @since jdk-18.0.2
  */
-public interface PropertyValidator {
+public interface PropertyValidator<T> {
 
     /**
      * Realiza el proceso de validacion de los datos de una propiedad.
      *
+     * @param value el valor de la propiedad a asignar.
      * @throws InvalidPropertyException si ocurre un error en la validacion de
      * los datos y por tanto la nueva propiedad no debe ser aceptada.
      */
-    public void validate() throws InvalidPropertyException;
+    public void validate(T value) throws InvalidPropertyException;
 }
